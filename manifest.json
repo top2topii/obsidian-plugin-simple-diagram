@@ -1,0 +1,9 @@
+{
+  "id": "simple-diagram",
+  "name": "Simple Diagram",
+  "version": "0.1.0",
+  "minAppVersion": "1.0.0",
+  "description": "Render simple box-and-arrow flow diagrams from a ```diagram code block, in the style of ChatGPT's diagram cards.",
+  "author": "Joseph Han",
+  "isDesktopOnly": false
+}

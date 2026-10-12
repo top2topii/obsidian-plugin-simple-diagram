@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simple Diagram Demo</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* Rough stand-ins for Obsidian's theme variables (dark by default). */
+  :root {
+    --background-primary: #000; --background-secondary: #161616;
+    --background-modifier-border: #2e2e2e; --background-modifier-hover: rgba(255,255,255,.06);
+    --text-normal: #e6e6e6; --text-muted: #a8a8a8; --text-faint: #8a8a8a; --text-error: #fb464c;
+    --interactive-accent: #8a5cf5;
+    --color-red-rgb: 251,70,76; --color-orange-rgb: 233,151,63; --color-yellow-rgb: 224,222,113;
+    --color-green-rgb: 68,207,110; --color-cyan-rgb: 83,223,221; --color-blue-rgb: 2,122,255;
+    --color-purple-rgb: 168,130,255; --color-pink-rgb: 250,153,205;
+  }
+  :root[data-theme="light"] {
+    --background-primary: #fff; --background-secondary: #f6f6f6;
+    --background-modifier-border: #e0e0e0; --background-modifier-hover: rgba(0,0,0,.05);
+    --text-normal: #222; --text-muted: #5c5c5c; --text-faint: #999;
+    --color-blue-rgb: 8,109,221; --color-green-rgb: 8,185,78;
+  }
+  body { margin: 0; padding: 24px 16px; background: var(--background-primary); color: var(--text-normal);
+         font-family: -apple-system, "Segoe UI", "Malgun Gothic", sans-serif; font-size: 15px; }
+  main { max-width: 760px; margin: 0 auto; }
+  button { margin-bottom: 16px; }
+  .block { margin-bottom: 32px; }
+</style>
+</head>
+<body>
+<main>
+  <button onclick="document.documentElement.dataset.theme = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light'">Toggle theme</button>
+  <div id="out"></div>
+</main>
+<script>
+  // Shim Obsidian's require/module so main.js loads in a plain browser.
+  window.module = { exports: {} };
+  window.require = () => ({ Plugin: class {} });
+</script>
+<script src="main.js"></script>
+<script>
+  const render = module.exports.renderDiagram;
+  const samples = [
+`title: 1. 권장 아키텍처
+[plain] 현장 클라이언트 | PDF 10~50개 일괄 업로드
+NestJS API | 인증 · 업로드 · Batch ID / Job ID 발급
+[blue] Redis + BullMQ | 대기열 · 재시도 · 동시성 제한 · 우선순위
+Python Worker | PDF 분류 → 텍스트 추출 / OCR → 추론 요청
+[green] Ollama · RX 7900 XTX 24GB | LLM 추론 — 처음에는 동시성 1
+검증 및 PostgreSQL 저장 | 스키마 검증 · 원문 대조 · 중복 방지 · 결과 조회`,
+`title: 2. 병렬 처리 + 화살표 라벨
+업로드 요청
+-> enqueue
+[blue] Queue
+--> 비동기
+[orange] Worker A | 텍스트 PDF ;; [purple] Worker B | 스캔 PDF (OCR)
+-> 결과 병합
+[green] 결과 저장
+  여러 줄 설명도 들여쓰기로 추가`,
+`title: 3. 가로 방향
+direction: right
+Client
+-> HTTP
+[blue] API
+-> job
+Queue
+[green] Worker | 처리`,
+  ];
+  const out = document.getElementById('out');
+  for (const s of samples) {
+    const block = document.createElement('div');
+    block.className = 'block';
+    render(s, block);
+    out.appendChild(block);
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+/* Simple Diagram — uses Obsidian theme variables so it follows light/dark mode. */
+
+.sd-wrap {
+  margin: 0.25em 0 1em;
+}
+
+.sd-title {
+  font-weight: 700;
+  font-size: 1.05em;
+  color: var(--text-normal);
+  margin-bottom: 0.6em;
+}
+
+.sd-frame {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 16px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 14px;
+  background: var(--background-primary);
+}
+
+.sd-row {
+  display: flex;
+  gap: 12px;
+}
+
+.sd-node {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 12px 16px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 10px;
+  background: var(--background-primary);
+  text-align: center;
+}
+
+.sd-node-title {
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text-normal);
+}
+
+.sd-node-desc {
+  margin-top: 3px;
+  font-size: 0.85em;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+.sd-edge {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 32px;
+  color: var(--text-faint);
+}
+
+.sd-edge-label {
+  position: absolute;
+  left: calc(50% + 14px);
+  font-size: 0.75em;
+  white-space: nowrap;
+  color: var(--text-muted);
+}
+
+/* Horizontal (direction: right) */
+.sd-frame.sd-dir-right {
+  flex-direction: row;
+  align-items: center;
+  overflow-x: auto;
+}
+
+.sd-dir-right .sd-row {
+  flex: 1 1 0;
+  min-width: 130px;
+  flex-direction: column;
+}
+
+.sd-dir-right .sd-edge {
+  flex: 0 0 auto;
+  flex-direction: column;
+  height: auto;
+  min-width: 36px;
+  padding: 0 4px;
+}
+
+.sd-dir-right .sd-edge-label {
+  position: static;
+  max-width: 90px;
+  order: -1;
+  margin-bottom: 2px;
+  text-align: center;
+  white-space: normal;
+}
+
+/* Accent colors */
+.sd-node.sd-c-red    { border-color: rgb(var(--color-red-rgb));    background: rgba(var(--color-red-rgb), 0.07); }
+.sd-node.sd-c-orange { border-color: rgb(var(--color-orange-rgb)); background: rgba(var(--color-orange-rgb), 0.07); }
+.sd-node.sd-c-yellow { border-color: rgb(var(--color-yellow-rgb)); background: rgba(var(--color-yellow-rgb), 0.07); }
+.sd-node.sd-c-green  { border-color: rgb(var(--color-green-rgb));  background: rgba(var(--color-green-rgb), 0.07); }
+.sd-node.sd-c-cyan   { border-color: rgb(var(--color-cyan-rgb));   background: rgba(var(--color-cyan-rgb), 0.07); }
+.sd-node.sd-c-blue   { border-color: rgb(var(--color-blue-rgb));   background: rgba(var(--color-blue-rgb), 0.07); }
+.sd-node.sd-c-purple { border-color: rgb(var(--color-purple-rgb)); background: rgba(var(--color-purple-rgb), 0.07); }
+.sd-node.sd-c-pink   { border-color: rgb(var(--color-pink-rgb));   background: rgba(var(--color-pink-rgb), 0.07); }
+.sd-node.sd-c-gray   { border-color: var(--text-faint);            background: var(--background-secondary); }
+.sd-node.sd-c-accent { border-color: var(--interactive-accent);    background: var(--background-modifier-hover); }
+.sd-node.sd-c-plain  { border-color: transparent;              background: transparent; }
+
+.sd-empty {
+  padding: 12px;
+  color: var(--text-error);
+  font-size: 0.85em;
+}
