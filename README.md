@@ -6,7 +6,6 @@ Write plain text in a ` ```diagram ` code block and get clean box-and-arrow flow
 
 ````markdown
 ```diagram
-title: 1. Recommended architecture
 [plain] Field client | Bulk upload of 10–50 PDFs
 NestJS API | Auth · Upload · Issue Batch ID / Job ID
 [blue] Redis + BullMQ | Queue · Retries · Concurrency limits · Priorities
@@ -15,6 +14,11 @@ Python Worker | Classify PDF → Text extraction / OCR → Inference request
 Validate & store in PostgreSQL | Schema validation · Source cross-check · Deduplication
 ```
 ````
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/architecture-dark.png">
+  <img alt="Rendered architecture diagram: six stacked boxes connected by arrows, with the Redis box in blue and the Ollama box in green" src="docs/images/architecture-light.png" width="760">
+</picture>
 
 ## Features
 
@@ -25,6 +29,46 @@ Validate & store in PostgreSQL | Schema validation · Source cross-check · Dedu
 - Solid or dashed arrows with optional labels
 - Vertical (default) or horizontal layout
 - Plain JavaScript, no build step; works on desktop and mobile
+
+## Examples
+
+### Parallel steps and arrow labels
+
+````markdown
+```diagram
+Upload request
+-> enqueue
+[blue] Queue
+--> async
+[orange] Worker A | Text PDFs ;; [purple] Worker B | Scanned PDFs (OCR)
+-> merge results
+[green] Store results
+```
+````
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/parallel-dark.png">
+  <img alt="Rendered diagram with a labeled arrow, a dashed arrow, and two worker boxes side by side" src="docs/images/parallel-light.png" width="760">
+</picture>
+
+### Horizontal layout
+
+````markdown
+```diagram
+direction: right
+Client
+-> HTTP
+[blue] API
+-> job
+Queue
+[green] Worker | Process
+```
+````
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/horizontal-dark.png">
+  <img alt="Rendered left-to-right diagram: Client, API, Queue, Worker with labeled arrows" src="docs/images/horizontal-light.png" width="760">
+</picture>
 
 ## Installation
 
