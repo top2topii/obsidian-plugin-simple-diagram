@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -43,30 +43,30 @@
 <script>
   const render = module.exports.renderDiagram;
   const samples = [
-`title: 1. 권장 아키텍처
-[plain] 현장 클라이언트 | PDF 10~50개 일괄 업로드
-NestJS API | 인증 · 업로드 · Batch ID / Job ID 발급
-[blue] Redis + BullMQ | 대기열 · 재시도 · 동시성 제한 · 우선순위
-Python Worker | PDF 분류 → 텍스트 추출 / OCR → 추론 요청
-[green] Ollama · RX 7900 XTX 24GB | LLM 추론 — 처음에는 동시성 1
-검증 및 PostgreSQL 저장 | 스키마 검증 · 원문 대조 · 중복 방지 · 결과 조회`,
-`title: 2. 병렬 처리 + 화살표 라벨
-업로드 요청
+`title: 1. Recommended architecture
+[plain] Field client | Bulk upload of 10–50 PDFs
+NestJS API | Auth · Upload · Issue Batch ID / Job ID
+[blue] Redis + BullMQ | Queue · Retries · Concurrency limits · Priorities
+Python Worker | Classify PDF → Text extraction / OCR → Inference request
+[green] Ollama · RX 7900 XTX 24GB | LLM inference — concurrency 1 to start
+Validate & store in PostgreSQL | Schema validation · Source cross-check · Deduplication · Result lookup`,
+`title: 2. Parallel steps + arrow labels
+Upload request
 -> enqueue
 [blue] Queue
---> 비동기
-[orange] Worker A | 텍스트 PDF ;; [purple] Worker B | 스캔 PDF (OCR)
--> 결과 병합
-[green] 결과 저장
-  여러 줄 설명도 들여쓰기로 추가`,
-`title: 3. 가로 방향
+--> async
+[orange] Worker A | Text PDFs ;; [purple] Worker B | Scanned PDFs (OCR)
+-> merge results
+[green] Store results
+  Indent to add more description lines`,
+`title: 3. Horizontal layout
 direction: right
 Client
 -> HTTP
 [blue] API
 -> job
 Queue
-[green] Worker | 처리`,
+[green] Worker | Process`,
   ];
   const out = document.getElementById('out');
   for (const s of samples) {
